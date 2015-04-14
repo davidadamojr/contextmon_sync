@@ -15,8 +15,17 @@ class DatabaseFunctions {
 	
 	}
 	
-	public function store_broadcasts() {
-	
+	public function store_broadcasts($data) {
+		$sql = [];
+		foreach ($data as $row) {
+			$sql[] = "('" . $row->device_id . "', " . $row->timestamp . ", '" . $row->action . "', '" . $row->extras . "', '" . $row->android_version . "')";
+		}
+		
+		$result = mysql_query("INSERT INTO broadcasts (device_id, timestamp, action, extras, android_version) VALUES " . implode(',', $sql));
+		if ($result) {
+			return true;
+		} else {
+			return false;
+		}
 	}
-}
 ?>

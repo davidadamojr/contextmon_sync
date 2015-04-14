@@ -11,9 +11,12 @@ if (get_magic_quotes_gpc()) {
 }
 
 $data = json_decode($json);
-$insert_query = 'INSERT INTO broadcasts (device_id, timestamp, action, extras, android_version) VALUES ';
-
-$response = array();
+$query_response = $db->store_broadcasts($data);
+$json_response = array();
+if ($query_response) {
+	// query succeeded
+	$json_response['success'] = 'yes';
+}
 
 echo json_encode($response);
 ?>
